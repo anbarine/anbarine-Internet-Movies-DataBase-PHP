@@ -1,6 +1,6 @@
-  -Create a DataBase and fill it with movies (Title , Image, Category, Director, Actors, Price)
-  -Make the HomePage of the Website
-  -Make Categories Pages (2)
-  -Search Solution by Title or Director 
-  -Make Cart Page
-  -Make a Register and Login Page
+  -Create a DataBase and fill it with movies (Title , Image, Category, Director, Actors, Price) </br>
+  -Make the HomePage of the Website</br>
+  -Make Categories Pages (2)</br>
+  -Search Solution by Title or Director </br>
+  -Make Cart Page</br>
+  -Make a Register and Login Page</br>
