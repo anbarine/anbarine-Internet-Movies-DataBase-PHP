@@ -28,6 +28,8 @@
         </div>
         
     </header>
+
+    <h1 class="heading">Drama</h1>
     <div class="movies">
 
                 <?php
@@ -38,7 +40,7 @@
             echo "Error: " . $e->getMessage();
         }
         try{
-                $stmt = $pdo->prepare("SELECT Title, Image, Director, Actor, Price FROM movies");
+                $stmt = $pdo->prepare("SELECT Title, Image, Director, Actor, Price FROM movies WHERE Category= 'Drama' ");
                 $stmt->execute();
                 $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
                 foreach(new RecursiveArrayIterator($stmt->fetchAll()) as $k => $v) {
