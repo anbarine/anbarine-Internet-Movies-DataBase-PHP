@@ -15,7 +15,7 @@
             $username = htmlspecialchars($_POST['username']);
             $email = htmlspecialchars($_POST['email']);
             $password = htmlspecialchars($_POST['password']);
-            password_hash("$password", PASSWORD_DEFAULT);
+            $hashed_password = password_hash("$password", PASSWORD_DEFAULT);
 
         try{
             $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
