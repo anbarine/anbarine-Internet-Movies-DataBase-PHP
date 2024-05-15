@@ -12,7 +12,8 @@
 <body>
     
     
-    <header> <input type="checkbox" name="menu" id="toggler">
+    <header> 
+        <input type="checkbox" name="menu" id="toggler">
         <label for="toggler" class="fas fa-bars"></label>
         <a href="home_page.php" class="logo">Movies <span> Shop</span></a>   
 
@@ -27,22 +28,36 @@
         <a href="#" class="fas fa-shopping-cart"> </a>
         <a href="login_page.php" class="fas fa-user"></a>
         </div>
-        
-    </header>
 
-    <h1 class="heading">Drama</h1>
-    <div class="movies-cat">
+        </header>
 
-                <?php
+        <div class="container-search">
+            <form action="" class="search-bar" method="post">
+                <input type="text" name="search" id="search" placeholder="search a movie" >
+                <button type="submit" name="submit"> <img src="search.png" alt="search png"></button>
+            </form>
+        </div>
+        <div class="movies">
+
+        <?php
+         if(isset($_POST['submit'])){
+            $search = htmlspecialchars($_POST['search']);
+         }
+
         try{
             $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
+
         try{
-                $stmt = $pdo->prepare("SELECT Title, Image, Director, Actor, Price FROM movies WHERE Category= 'Drama' ");
-                $stmt->execute();
+            $stmt = $pdo->prepare("SELECT Title, Image, Director, Actor, Price FROM movies WHERE Title LIKE :search OR Director LIKE :search");
+            $searchTerm = '%' . $search . '%';
+            $stmt->bindParam(':search', $searchTerm);
+            $stmt->execute();
+
+            
                 $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
                 foreach(new RecursiveArrayIterator($stmt->fetchAll()) as $k => $v) {
                 ?>
@@ -67,7 +82,13 @@
                         echo "Error: " . $e->getMessage();
                 }
         ?>
-    </div>
+
+            </div>
+
+        
+
+
+        
 
     
     

@@ -23,6 +23,7 @@
         </nav>
 
         <div class="icones">
+        <a href="search_page.php" class="fas fa-search"></a>
         <a href="#" class="fas fa-shopping-cart"> </a>
         <a href="login_page.php" class="fas fa-user"></a>
         </div>

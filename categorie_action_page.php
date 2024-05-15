@@ -23,6 +23,7 @@
         </nav>
 
         <div class="icones">
+        <a href="search_page.php" class="fas fa-search"></a>
         <a href="#" class="fas fa-shopping-cart"> </a>
         <a href="login_page.php" class="fas fa-user"></a>
         </div>
@@ -30,7 +31,7 @@
     </header>
 
     <h1 class="heading">Action</h1>
-    <div class="movies">
+    <div class="movies-cat">
 
                 <?php
         try{
