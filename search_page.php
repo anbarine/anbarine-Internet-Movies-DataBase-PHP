@@ -70,7 +70,7 @@
                 </div>
                 <div class="overview">
                     <h2> - Director: </h2> 
-                    <p><?php echo $v["Director"] ?> </p>
+                    <p><a href="director_page.php?director=<?php echo urlencode($v["Director"]); ?>"><?php echo $v["Director"]; ?></a></p>
                     <h2> - Actors: </h2>
                     <p><?php echo $v["Actor"] ?> </p>
                     <form action="" method="post">
@@ -118,7 +118,7 @@
                 }catch(PDOException $e) {
                     echo "Error: " . $e->getMessage();
                 }
-
+        }
         ?>
 
             </div>

@@ -7,7 +7,7 @@
     <link href="home_page.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>/*to put later */</style>
+
 </head>
 <body>
     <?php
@@ -63,9 +63,6 @@
         ?>
             
             
-            
-        
-        
     </header>
 
 
@@ -91,7 +88,7 @@
                 </div>
                 <div class="overview">
                     <h2> - Director: </h2> 
-                    <p><?php echo $v["Director"] ?> </p>
+                    <p><a href="director_page.php?director=<?php echo urlencode($v["Director"]); ?>"><?php echo $v["Director"]; ?></a> </p>
                     <h2> - Actors: </h2>
                     <p><?php echo $v["Actor"] ?> </p>
                     <button class="button">Add to cart</button>

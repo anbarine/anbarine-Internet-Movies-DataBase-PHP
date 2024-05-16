@@ -44,12 +44,12 @@
 
                     header("Location: home_page.php");
                     exit(); 
-                } else {
-                    echo "<div class='message'>
+                } else {?>
+                    <div class='message'>
                             <p>Wrong Username or Password</p>
-                          </div><br>";
-                    echo "<a href='login_page.php'><button class='btn'>Go Back</button></a>";
-                }
+                    </div><br>                    
+                    <a href='login_page.php'><button class='btn'>Go Back</button></a>
+                <?php }
                 
             } else {
 
@@ -73,9 +73,10 @@
                 </div>
 
                 <div class="links">
-                    Don't have an account? <a href="sign_up_page.php">Sing Up</a>
+                    Don't have an account? <a href="sign_up_page.php">Sign Up</a>
                 </div> 
-                </form>     
+                </form> 
+                <a href='home_page.php'><button class='btn'>Go Back</button></a>    
         </div>
         <?php } ?>    
     </div>  
