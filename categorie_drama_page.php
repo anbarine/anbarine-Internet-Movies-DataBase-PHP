@@ -12,6 +12,16 @@
 <body>
     
     
+<?php
+        try{
+            $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        } 
+    session_start(); 
+    ?>
+    
     <header> <input type="checkbox" name="menu" id="toggler">
         <label for="toggler" class="fas fa-bars"></label>
         <a href="home_page.php" class="logo">Movies <span> Shop</span></a>   
@@ -21,14 +31,44 @@
         <a href="categorie_action_page.php"> Action</a>
         <a href="categorie_drama_page.php"> Drama</a>
         </nav>
-
+    <?php
+        if(!isset($_SESSION['valid']) || !$_SESSION['valid']){?>
+        <div class="icones">
+            <a href="search_page.php" class="fas fa-search"></a>
+            <a href="login_page.php" class="fas fa-user"></a>
+        </div>
+            <?php
+        }else{?>
         <div class="icones">
         <a href="search_page.php" class="fas fa-search"></a>
         <a href="cart_page.php" class="fas fa-shopping-cart"> </a>
-        <a href="login_page.php" class="fas fa-user"></a>
+        <a href="logout_page.php" class="fas fa-user"></a>
+        <?php
+        if($_SESSION['Id']){
+                $id = $_SESSION['Id'];
+                $stmt = $pdo->prepare("SELECT * FROM users WHERE Id=$id");
+                $stmt->execute();
+                $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    
+    
+                if (!isset($_SESSION['valid']) || !$_SESSION['valid']) {
+                    $Username = $result['Username'];
+                    $user_Email = $result['Email'];
+                    $user_Id = $result['Id'];
+                }
+            
+            ?>
+            <p class="p-header" >Welcome <b><?php echo $_COOKIE["Username"] ?></b> !</p>
         </div>
-        
+        <?php } }
+        ?>
+            
+            
     </header>
+
+
+        </div>
+    </div>
 
     <h1 class="heading">Drama</h1>
     <div class="movies-cat">

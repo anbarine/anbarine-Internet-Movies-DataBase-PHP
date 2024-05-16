@@ -33,14 +33,13 @@
         if(!isset($_SESSION['valid']) || !$_SESSION['valid']){?>
         <div class="icones">
             <a href="search_page.php" class="fas fa-search"></a>
-            <a href="#" class="fas fa-shopping-cart"> </a>
             <a href="login_page.php" class="fas fa-user"></a>
         </div>
             <?php
         }else{?>
         <div class="icones">
         <a href="search_page.php" class="fas fa-search"></a>
-        <a href="#" class="fas fa-shopping-cart"> </a>
+        <a href="cart_page.php" class="fas fa-shopping-cart"> </a>
         <a href="logout_page.php" class="fas fa-user"></a>
         <?php
         if($_SESSION['Id']){
@@ -65,8 +64,6 @@
             
     </header>
 
-
-            <a href="logout.php"> <button class="btn">Log Out</button> </a>
 
         </div>
     </div>

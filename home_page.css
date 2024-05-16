@@ -206,6 +206,59 @@ header .fa-bars{
     letter-spacing:  0.5px;
 }
 
+.movie-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px;
+    width: 200px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.movie-cart img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.movie-cart h2 {
+    font-size: 18px;
+    color: #333;
+    margin: 8px 0;
+    text-align: center;
+}
+
+.movie-cart .price {
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 16px;
+}
+
+.movie-cart form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.movie-cart button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.movie-cart button:hover {
+    background-color: #c0392b;
+}
+
 
 .button{
     background-color: rgb(0, 94, 255);
