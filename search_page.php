@@ -25,7 +25,7 @@
 
         <div class="icones">
         <a href="search_page.php" class="fas fa-search"></a>
-        <a href="#" class="fas fa-shopping-cart"> </a>
+        <a href="cart_page.php" class="fas fa-shopping-cart"> </a>
         <a href="login_page.php" class="fas fa-user"></a>
         </div>
 
@@ -40,9 +40,9 @@
         <div class="movies">
 
         <?php
-         if(isset($_POST['submit'])){
+        if(isset($_POST['submit'])){
             $search = htmlspecialchars($_POST['search']);
-         }
+        
 
         try{
             $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
@@ -82,7 +82,7 @@
                 <?php
                 }}catch(PDOException $e) {
                         echo "Error: " . $e->getMessage();
-                }
+                }}
 
                 if (isset($_POST['movie_id'])) {
                     $movieId = intval($_POST['movie_id']);
@@ -94,26 +94,26 @@
                     echo "Error: " . $e->getMessage();
                 }
                 try{
-                    $stmt = $pdo->prepare("SELECT * FROM cart WHERE id_user = 4 AND id_movie = :movie");
-                    $stmt->bindParam(':movie', $movieId);
-                    $stmt->execute();
-                    $iterations = 0;
+                    if(!isset($_SESSION['valid']) || !$_SESSION['valid']){
+                        
+                    }else{
+                        $id = $_COOKIE['Id'];
+                        $stmt = $pdo->prepare("SELECT * FROM cart WHERE id_user = :user AND id_movie = :movie");
+                        $stmt->bindParam(':user', $id);
+                        $stmt->bindParam(':movie', $movieId);
+                        $stmt->execute();
+                        $iterations = 0;
 
-                    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                    foreach(new RecursiveArrayIterator($stmt->fetchAll()) as $k => $v) {
-                        $iterations += 1;
-                        echo "<script>console.log($iterations);</script>";
+                        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                        foreach(new RecursiveArrayIterator($stmt->fetchAll()) as $k => $v) {
+                            $iterations += 1;
+                        }
+                        if($iterations == 0 ){
+                        $stmt = $pdo->prepare("INSERT INTO cart (Id, Id_user, Id_movie) VALUES (NULL, $id, $movieId)");
+                        $stmt->execute();
+                        }
                     }
-                    if($iterations == 0 ){
-                    $id = $_COOKIE['Id'];
-                    echo "<script>console.log('Debug Objects: " . $movieId . "' );</script>";
-                    $stmt = $pdo->prepare("INSERT INTO cart (Id, Id_user, Id_movie) VALUES (NULL, $id, $movieId)");
-                    if ($stmt->execute()) {
-                        echo "<script>console.log(Movie added to cart successfully!);</script>";
-                    } else {
-                        echo "<script>console.log(Failed to add movie to cart.);</script>";
-                    }
-                    }
+                        
 
                 }catch(PDOException $e) {
                     echo "Error: " . $e->getMessage();
@@ -122,14 +122,6 @@
         ?>
 
             </div>
-
-        
-
-
-        
-
-    
-    
 
 
 </body>

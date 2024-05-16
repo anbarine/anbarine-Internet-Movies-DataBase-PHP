@@ -102,6 +102,42 @@
                 }}catch(PDOException $e) {
                         echo "Error: " . $e->getMessage();
                 }
+
+                if (isset($_POST['movie_id'])) {
+                    $movieId = intval($_POST['movie_id']);
+                }
+                try{
+                    $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                }catch(PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+                try{
+                    if(!isset($_SESSION['valid']) || !$_SESSION['valid']){
+                        
+                    }else{
+                        $id = $_COOKIE['Id'];
+                        $stmt = $pdo->prepare("SELECT * FROM cart WHERE id_user = :user AND id_movie = :movie");
+                        $stmt->bindParam(':user', $id);
+                        $stmt->bindParam(':movie', $movieId);
+                        $stmt->execute();
+                        $iterations = 0;
+
+                        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                        foreach(new RecursiveArrayIterator($stmt->fetchAll()) as $k => $v) {
+                            $iterations += 1;
+                        }
+                        if($iterations == 0 ){
+                        $stmt = $pdo->prepare("INSERT INTO cart (Id, Id_user, Id_movie) VALUES (NULL, $id, $movieId)");
+                        $stmt->execute();
+                        }
+                    }
+                        
+
+                }catch(PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+
         ?>
     </div>
 
