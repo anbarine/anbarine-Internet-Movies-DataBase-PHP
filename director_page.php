@@ -10,6 +10,7 @@
 
 </head>
 <body>
+    
     <?php
         try{
             $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
@@ -63,47 +64,54 @@
         ?>
             
             
+            
+        
+        
     </header>
 
+        <?php 
+            $director = $_GET['director'];?>
+            <h1 class="heading"> <?php echo $director ?> </h1>
+            <?php
 
-            <a href="logout.php"> <button class="btn">Log Out</button> </a>
-
-        </div>
-    </div>
-    <div class="movies">
-        <?php
-                
-        try{
-                $stmt = $pdo->prepare("SELECT Title, Image, Director, Actor, Price FROM movies");
-                $stmt->execute();
-                $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                foreach(new RecursiveArrayIterator($stmt->fetchAll()) as $k => $v) {
-                ?>
-                <div class="movie">
-                <img src="<?php echo $v['Image'] ?>" alt="<?php echo $v['Title'] ?>">
-                <div class="movie-info">
-                    <h2> <?php echo $v["Title"] ?> </h2>
-                    <h2> Price: <?php echo $v["Price"] ?>$ </h2>
-                    
+            try{
+                $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            }catch(PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+            try{
+                    $stmt = $pdo->prepare("SELECT Title, Image, Director, Actor, Price FROM movies WHERE Director=:director ");
+                    $stmt->bindParam(':director', $director, PDO::PARAM_STR);
+                    $stmt->execute();
+                    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                    foreach(new RecursiveArrayIterator($stmt->fetchAll()) as $k => $v) {
+                    ?>
+                    <div class="movie">
+                    <img src="<?php echo $v['Image'] ?>" alt="<?php echo $v['Title'] ?>">
+                    <div class="movie-info">
+                        <h2> <?php echo $v["Title"] ?> </h2>
+                        <h2> Price: <?php echo $v["Price"] ?>$ </h2>
+                        
+                    </div>
+                    <div class="overview">
+                        <h2> - Director: </h2> 
+                        <p><?php echo $v["Director"] ?> </p>
+                        <h2> - Actors: </h2>
+                        <p><?php echo $v["Actor"] ?> </p>
+                        <button class="button">Add to cart</button>
+    
+                    </div>
                 </div>
-                <div class="overview">
-                    <h2> - Director: </h2> 
-                    <p><a href="director_page.php?director=<?php echo urlencode($v["Director"]); ?>"><?php echo $v["Director"]; ?></a> </p>
-                    <h2> - Actors: </h2>
-                    <p><?php echo $v["Actor"] ?> </p>
-                    <button class="button">Add to cart</button>
-
-                </div>
-            </div>
-                <?php
-                }}catch(PDOException $e) {
-                        echo "Error: " . $e->getMessage();
-                }
+                    <?php
+                    }}catch(PDOException $e) {
+                            echo "Error: " . $e->getMessage();
+                    }
+            ?>
         ?>
-    </div>
 
-    
-    
+
+
 
 
 </body>

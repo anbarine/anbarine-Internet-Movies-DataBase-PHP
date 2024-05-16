@@ -31,19 +31,23 @@
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             
             
-            if($result){
-                echo "<div class='message'>
+            if($result){ ?>
+            <div class='message'>
                           <p>This email is used, Try another One Please!</p>
-                      </div> <br>";
-                echo "<a href='sign_up_page.php'><button class='btn'>Go Back</button>";
+            </div> <br>";
+                <a href='sign_up_page.php'><button class='btn'>Go Back</button>
+                <?php
              }else{
                 $stmt = $pdo->prepare("INSERT INTO users(Username,Email,Password) VALUES(:username,:email,:password)");
                 $stmt->execute([':username' => $username, ':email' => $email , ':password' => $hashed_password ]);
     
-                echo "<div class='message'>
+                ?>
+                    <div class='message'>
                           <p>Registration successfully!</p>
-                      </div> <br>";
-                echo "<a href='login_page.php'><button class='btn'>Login Now</button>";}}
+                    </div> <br>
+                <a href='login_page.php'><button class='btn'>Login Now</button>
+                <?php } }
+                
             catch(PDOException $e) {
                
             }
@@ -78,6 +82,7 @@
                     Already have an account? <a href="login_page.php">Sign In</a>
                 </div>   
          </form>
+         <a href='home_page.php'><button class='btn'>Go Back</button></a>
             </div>
                 <?php }
                  $pdo = null;?>

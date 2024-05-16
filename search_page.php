@@ -40,9 +40,9 @@
         <div class="movies">
 
         <?php
-         if(isset($_POST['submit'])){
+        if(isset($_POST['submit'])){
             $search = htmlspecialchars($_POST['search']);
-         }
+         
 
         try{
             $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
@@ -70,7 +70,7 @@
                 </div>
                 <div class="overview">
                     <h2> - Director: </h2> 
-                    <p><?php echo $v["Director"] ?> </p>
+                    <p><a href="director_page.php?director=<?php echo urlencode($v["Director"]); ?>"><?php echo $v["Director"]; ?></a></p>
                     <h2> - Actors: </h2>
                     <p><?php echo $v["Actor"] ?> </p>
                     <button class="button">Add to cart</button>
@@ -80,7 +80,7 @@
                 <?php
                 }}catch(PDOException $e) {
                         echo "Error: " . $e->getMessage();
-                }
+                }}
         ?>
 
             </div>
