@@ -76,7 +76,7 @@
                 }
         
                 try{
-                    $stmt = $pdo->prepare("SELECT ID, Id_movie FROM cart WHERE Id_user = :user");
+                    $stmt = $pdo->prepare("SELECT Id, Id_movie FROM cart WHERE Id_user = :user");
                     $stmt->bindParam(':user', $id);
                     $stmt->execute();
         
@@ -93,7 +93,7 @@
                                 <h2> <?php echo $row["Title"] ?> </h2>
                                 <h2> Price: <?php echo $row["Price"] ?>$ </h2>
                                 <form action="" method="post">
-                                    <input type="hidden" name="movie_delete" value="<?php echo $v['ID'] ?>">
+                                    <input type="hidden" name="movie_delete" value="<?php echo $v['Id'] ?>">
                                     <button type="submit" class="button">Delete </button>
                                 </form>
                             </div>
@@ -102,6 +102,24 @@
                 }catch(PDOException $e) {
                     echo "Error: " . $e->getMessage();
                 }
+
+                if (isset($_POST['movie_delete'])) {
+                    $movieId = intval($_POST['movie_delete']);
+                
+                try{
+                    $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                }catch(PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+                try{
+                    $stmt = $pdo->prepare("DELETE FROM cart WHERE Id=:movie");
+                    $stmt->bindParam(':movie', $movieId);
+                    $stmt->execute();
+                    header("Refresh:0");
+                }catch(PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }}
             ?>
     
 
