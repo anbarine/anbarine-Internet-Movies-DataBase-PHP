@@ -52,7 +52,7 @@
         }
 
         try{
-            $stmt = $pdo->prepare("SELECT Title, Image, Director, Actor, Price FROM movies WHERE Title LIKE :search OR Director LIKE :search");
+            $stmt = $pdo->prepare("SELECT ID, Title, Image, Director, Actor, Price FROM movies WHERE Title LIKE :search OR Director LIKE :search");
             $searchTerm = '%' . $search . '%';
             $stmt->bindParam(':search', $searchTerm);
             $stmt->execute();
@@ -73,14 +73,52 @@
                     <p><a href="director_page.php?director=<?php echo urlencode($v["Director"]); ?>"><?php echo $v["Director"]; ?></a></p>
                     <h2> - Actors: </h2>
                     <p><?php echo $v["Actor"] ?> </p>
-                    <button class="button">Add to cart</button>
-
+                    <form action="" method="post">
+                        <input type="hidden" name="movie_id" value="<?php echo $v['ID'] ?>">
+                        <button type="submit" class="button">Add to cart</button>
+                    </form>
                 </div>
             </div>
                 <?php
                 }}catch(PDOException $e) {
                         echo "Error: " . $e->getMessage();
-                }}
+                }
+
+                if (isset($_POST['movie_id'])) {
+                    $movieId = intval($_POST['movie_id']);
+                }
+                try{
+                    $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                }catch(PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+                try{
+                    $stmt = $pdo->prepare("SELECT * FROM cart WHERE id_user = 4 AND id_movie = :movie");
+                    $stmt->bindParam(':movie', $movieId);
+                    $stmt->execute();
+                    $iterations = 0;
+
+                    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                    foreach(new RecursiveArrayIterator($stmt->fetchAll()) as $k => $v) {
+                        $iterations += 1;
+                        echo "<script>console.log($iterations);</script>";
+                    }
+                    if($iterations == 0 ){
+                    $id = $_COOKIE['Id'];
+                    echo "<script>console.log('Debug Objects: " . $movieId . "' );</script>";
+                    $stmt = $pdo->prepare("INSERT INTO cart (Id, Id_user, Id_movie) VALUES (NULL, $id, $movieId)");
+                    if ($stmt->execute()) {
+                        echo "<script>console.log(Movie added to cart successfully!);</script>";
+                    } else {
+                        echo "<script>console.log(Failed to add movie to cart.);</script>";
+                    }
+                    }
+
+                }catch(PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+
         ?>
 
             </div>
