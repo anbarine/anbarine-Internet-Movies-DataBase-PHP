@@ -14,29 +14,34 @@
              if(isset($_POST['submit'])){
                 $email = htmlspecialchars($_POST['email']);
                 $password = htmlspecialchars($_POST['password']);
-                password_hash("$password", PASSWORD_DEFAULT);
+                
             
                
                 $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
                 
                 
-                $stmt = $pdo->prepare("SELECT * FROM users WHERE Email=:email AND Password=:password");
-                
+                $stmt = $pdo->prepare("SELECT * FROM users WHERE Email=:email");
                 
                 $stmt->bindParam(':email', $email);
-                $stmt->bindParam(':password', $password);
                 
                
                 $stmt->execute();
                 
                 
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                
             
-                if($row){
+                if($row && password_verify($password, $row['Password']) ){
                     session_start();
                     $_SESSION['valid'] = $row['Email'];
-                    $_SESSION['username'] = $row['Username'];
-                    $_SESSION['id'] = $row['Id'];
+                    $_SESSION['Username'] = $row['Username'];
+                    $_SESSION['Id'] = $row['Id'];
+
+                    setcookie("Email", $email, time() + 10000000, "/");
+                    setcookie("Username",  $row['Username'], time() + 10000000, "/");
+                    setcookie("Id",  $row['Id'], time() + 10000000, "/");
+
                     header("Location: home_page.php");
                     exit(); 
                 } else {
@@ -45,7 +50,9 @@
                           </div><br>";
                     echo "<a href='login_page.php'><button class='btn'>Go Back</button></a>";
                 }
+                
             } else {
+
                 
             
             ?>

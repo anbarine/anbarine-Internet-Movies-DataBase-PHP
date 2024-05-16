@@ -25,24 +25,26 @@
         }
 
         try{
-            $stmt = $pdo->prepare("SELECT Username, Email, Password FROM users");
-            $stmt->execute();
-            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            foreach(new RecursiveArrayIterator($stmt->fetchAll()) as $k => $v) {
-            if( $v["Email"] == $email ){
+            $stmt = $pdo->prepare("SELECT Username, Email, Password FROM users WHERE Email=:email ");
+
+            $stmt->execute([':email' => $email]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            
+            if($result){
                 echo "<div class='message'>
                           <p>This email is used, Try another One Please!</p>
                       </div> <br>";
                 echo "<a href='sign_up_page.php'><button class='btn'>Go Back</button>";
-             }}
-             if( $v["Email"] != $email ){
+             }else{
                 $stmt = $pdo->prepare("INSERT INTO users(Username,Email,Password) VALUES(:username,:email,:password)");
-                $stmt->execute([':username' => $username, ':email' => $email , ':password' => $password ]);
+                $stmt->execute([':username' => $username, ':email' => $email , ':password' => $hashed_password ]);
     
                 echo "<div class='message'>
                           <p>Registration successfully!</p>
                       </div> <br>";
-                echo "<a href='login_page.php'><button class='btn'>Login Now</button>";}}catch(PDOException $e) {
+                echo "<a href='login_page.php'><button class='btn'>Login Now</button>";}}
+            catch(PDOException $e) {
                
             }
         

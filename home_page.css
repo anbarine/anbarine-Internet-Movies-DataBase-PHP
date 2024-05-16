@@ -287,6 +287,12 @@ header .fa-bars{
     cursor: pointer;
 }
 
+.p-header{
+    color: #fff;
+    margin-top: 5px;
+    text-align: right;
+}
+
 
 
 
