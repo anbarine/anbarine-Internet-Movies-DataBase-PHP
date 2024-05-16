@@ -74,7 +74,7 @@
         <?php
                 
         try{
-                $stmt = $pdo->prepare("SELECT Title, Image, Director, Actor, Price FROM movies");
+                $stmt = $pdo->prepare("SELECT ID, Title, Image, Director, Actor, Price FROM movies");
                 $stmt->execute();
                 $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
                 foreach(new RecursiveArrayIterator($stmt->fetchAll()) as $k => $v) {
@@ -91,7 +91,10 @@
                     <p><a href="director_page.php?director=<?php echo urlencode($v["Director"]); ?>"><?php echo $v["Director"]; ?></a> </p>
                     <h2> - Actors: </h2>
                     <p><?php echo $v["Actor"] ?> </p>
-                    <button class="button">Add to cart</button>
+                    <form action="" method="post">
+                        <input type="hidden" name="movie_id" value="<?php echo $v['ID'] ?>">
+                        <button type="submit" class="button">Add to cart</button>
+                    </form>
 
                 </div>
             </div>
