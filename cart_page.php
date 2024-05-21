@@ -11,7 +11,9 @@
 <body>
     <?php
         try{
-            $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
+            require_once "C:\wamp64\www\PHP_PROJECT\config.php";
+
+            $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_DATABASE, DB_USERNAME, DB_PASSWORD);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -68,12 +70,7 @@
     </div>
         <div class=movies>
             <?php
-                try{
-                    $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
-                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                }catch(PDOException $e) {
-                    echo "Error: " . $e->getMessage();
-                }
+
         
                 try{
                     $stmt = $pdo->prepare("SELECT Id, Id_movie FROM cart WHERE Id_user = :user");
@@ -106,12 +103,6 @@
                 if (isset($_POST['movie_delete'])) {
                     $movieId = intval($_POST['movie_delete']);
                 
-                try{
-                    $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
-                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                }catch(PDOException $e) {
-                    echo "Error: " . $e->getMessage();
-                }
                 try{
                     $stmt = $pdo->prepare("DELETE FROM cart WHERE Id=:movie");
                     $stmt->bindParam(':movie', $movieId);

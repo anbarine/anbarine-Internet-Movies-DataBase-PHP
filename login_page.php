@@ -17,7 +17,9 @@
                 
             
                
-                $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
+                require_once "C:\wamp64\www\PHP_PROJECT\config.php";
+
+                 $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_DATABASE, DB_USERNAME, DB_PASSWORD);
                 
                 
                 $stmt = $pdo->prepare("SELECT * FROM users WHERE Email=:email");

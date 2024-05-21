@@ -14,7 +14,9 @@
     
 <?php
         try{
-            $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
+            require_once "C:\wamp64\www\PHP_PROJECT\config.php";
+
+            $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_DATABASE, DB_USERNAME, DB_PASSWORD);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -66,9 +68,12 @@
             
     </header>
 
-
+    <div class="container-search">
+            <form action="" class="search-bar" method="post">
+                <input type="text" name="search" id="search" placeholder="search a movie" >
+                <button type="submit" name="submit"> <img src="search.png" alt="search png"></button>
+            </form>
         </div>
-    </div>
         <div class="movies">
 
         <?php
@@ -76,12 +81,7 @@
             $search = htmlspecialchars($_POST['search']);
         
 
-        try{
-            $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        }catch(PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
+
 
         try{
             $stmt = $pdo->prepare("SELECT ID, Title, Image, Director, Actor, Price FROM movies WHERE Title LIKE :search OR Director LIKE :search");
@@ -119,12 +119,7 @@
                 if (isset($_POST['movie_id'])) {
                     $movieId = intval($_POST['movie_id']);
                 }
-                try{
-                    $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
-                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                }catch(PDOException $e) {
-                    echo "Error: " . $e->getMessage();
-                }
+
                 try{
                     if(!isset($_SESSION['valid']) || !$_SESSION['valid']){
                         
@@ -148,8 +143,9 @@
                         
 
                 }catch(PDOException $e) {
-                    echo "Error: " . $e->getMessage();
+                    
                 }
+
         
         ?>
 

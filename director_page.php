@@ -13,7 +13,9 @@
     
 <?php
         try{
-            $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
+            require_once "C:\wamp64\www\PHP_PROJECT\config.php";
+
+            $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_DATABASE, DB_USERNAME, DB_PASSWORD);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -75,12 +77,6 @@
             <?php
 
             try{
-                $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
-                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            }catch(PDOException $e) {
-                echo "Error: " . $e->getMessage();
-            }
-            try{
                     $stmt = $pdo->prepare("SELECT ID, Title, Image, Director, Actor, Price FROM movies WHERE Director=:director ");
                     $stmt->bindParam(':director', $director, PDO::PARAM_STR);
                     $stmt->execute();
@@ -114,12 +110,7 @@
                     if (isset($_POST['movie_id'])) {
                         $movieId = intval($_POST['movie_id']);
                     }
-                    try{
-                        $pdo = new PDO("mysql: host=localhost;dbname=1php_projet_franchet_teyar", "root" , "");
-                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    }catch(PDOException $e) {
-                        echo "Error: " . $e->getMessage();
-                    }
+
                     try{
                         if(!isset($_SESSION['valid']) || !$_SESSION['valid']){
                             
